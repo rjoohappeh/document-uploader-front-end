@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+	crossorigin="anonymous">
+<th:block th:include="fragments/assets.html :: assets"></th:block>
+	<th:block th:include="fragments/assets.html :: bootstrap-file-assets"></th:block>
+<title>Account</title>
+</head>
+<body>
+	<div th:insert="fragments/headerAndFooter.html :: header"></div>
+	<section class="min-vh-100 my-4">
+		<div class="container-fluid py-4 h-100 col-6 bg-light text-center">
+			<div class="card text-white rounded bg-dark">
+				<p class="h4 card-header">File Management</p>
+			</div>
+			<div class="container text-center text-truncate">
+				<form class="my-4" th:action="@{/account}" enctype="multipart/form-data" method="post">
+					<input id="input-b2" class="file" type="file" name="file" data-show-preview="false"/>
+				</form>
+			</div>
+			<p th:text="${message}"></p>
+			<div class="container-fluid">
+				<div th:each="document : ${account.documents}">
+					<form class="d-flex justify-content-between my-4" th:action="@{/account/deleteDocument/{documentName}(documentName=${document.name})}">
+						<p class="d-inline col-md-4" th:text="${document.name}"></p>
+						<button type="submit" class="btn btn-dark btn-outline-primary d-inline waves-effect px-3">
+							Delete
+							<i id="trashCan" class="fas fa-trash-alt"></i>
+						</button>
+						<button type="submit" class="btn btn-dark btn-outline-primary d-inline waves-effect px-3"
+								th:formaction="@{/account/downloadDocument/{documentName}(documentName=${document.name})}">
+							Download
+							<i class="fas fa-download"></i>
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+<!-- 		<script>
+			$('#delete-document').click((e) => {
+				e.preventDefault();
+				var token = $("input[name='_csrf']").val();
+			    var header = "X-CSRF-TOKEN";
+				const docName = $('#doc-name').text();
+				$.ajax({
+	                url: 'http://localhost:8088/account/deleteDocument/'+docName,
+	                type: 'DELETE',
+	                beforeSend: (request) => {
+	                	request.setRequestHeader(header, token);
+	                },
+	                success: (result) => {
+	                	console.log(result);
+	                	console.log([[${account.name}]]);
+	                	window.location = 'http://localhost:8088/'
+	                },
+	                error: (data) => {
+	                	console.log(data);
+	                }
+	            });
+			});
+        </script> -->
+</body>
+</html>

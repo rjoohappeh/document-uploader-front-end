@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+	crossorigin="anonymous">
+<script src="../../js/passwordValidation.js"></script>
+<th:block th:include="fragments/assets.html :: assets"></th:block>
+<title>Edit Profile Information</title>
+</head>
+<body>
+	<div th:insert="fragments/headerAndFooter.html :: header"></div>
+	<section class="min-vh-100 py-5">
+		<div class="container py-5 col-sm-4 text-center border border-gray p-5 bg-light">
+			<div class="card">
+					<p class="h4 card-header bg-dark text-center text-white rounded">Change Password</p>
+			</div>
+			<div th:if="${message}" class="mx-auto row justify-content-center">
+				<div class="alert alert-warning fade show mt-3 mb-0 col-md-12" role="alert">
+					<span th:text="${message}"></span>
+				</div>
+			</div>
+			<form class="my-4" th:action="@{/settings/updatePassword}" method="post">
+				<div class="mx-auto form-group row justify-content-center">
+					<div>
+						<input id="currentPassword" class="form-control" type="password"
+							maxlength="50" size="55"  name="currentPassword"
+							autofocus placeholder="Current Password" required
+							oninput="comparePasswords()" />
+					</div>
+				</div>
+				<div class="mx-auto form-group row justify-content-center">
+					<div>
+						<input id="password" class="form-control" oninput="comparePasswords()"
+							type="password" maxlength="50" size="55"
+							minlength="8" name="newPassword" placeholder="New Password" required
+							pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$"
+							oninvalid="this.setCustomValidity('Passwords must contain an uppercase, lowercase, number, and special character')"/>
+					</div>
+				</div> 
+				<div class="mx-auto form-group row justify-content-center">
+					<div>
+						<input id="passwordConfirmation" class="form-control" oninput="comparePasswords()" 
+							type="password" maxlength="50" size="55" minlength="8" name="newPasswordConfirmation" 
+							placeholder="Confirm Password" required
+							pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$"
+							oninvalid="this.setCustomValidity('Passwords must contain an uppercase, lowercase, number, and special character')" />
+						<div id="passwords-do-not-match-container" class="text-danger">
+						</div>
+					</div>
+				</div>
+				<div class="row justify-content-center">
+					<div class="col-md-12">
+						<input id="submit" class="btn btn-primary btn-block" role="button" type="submit" value="Update Password" />
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+</body>
+</html>

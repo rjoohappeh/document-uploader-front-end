@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Login</title>
+	<th:block th:include="fragments/assets.html :: assets"></th:block>
+</head>
+<body>
+	<div th:insert="fragments/headerAndFooter.html :: header"></div>
+	<section class="min-vh-100 py-5">
+		<div class="container py-5 col-sm-4">
+			<form id="indexLogin" class="text-center border border-gray p-5 bg-light" th:action="@{/login}" method="post">
+				<div class="card">
+					<p class="h4 card-header bg-dark text-center text-white rounded">Sign in</p>
+				</div>
+				<div th:if="${registerSuccess}" class="mx-auto row justify-content-center">
+					<div class="alert alert-warning fade show mt-3" role="alert">
+						<span th:text="${registerSuccess}"></span>
+					</div>
+				</div>
+				<div th:if="${confirmTokenSuccess}">
+					<div class="alert alert-warning fade show mt-3" role="alert">
+						<span th:text="${confirmTokenSuccess}"></span>
+					</div>
+				</div>
+				<div th:if="${confirmTokenFailure}">
+					<div class="alert alert-warning fade show mt-3" role="alert">
+						<span th:text="${confirmTokenFailure}"></span>
+					</div>
+				</div>
+				<div th:if="${param.error}" class="mx-auto row justify-content-center my-4">
+					<div class="alert alert-warning fade show mb-0" role="alert">
+						<span>
+							Invalid username or password.
+						</span>
+					</div>
+				</div>
+				<div th:if="${message}" class="mx-auto row justify-content-center my-4">
+					<div class="alert alert-warning fade show mb-0" role="alert">
+						<span th:text="${message}"></span>
+					</div>
+				</div>
+				<div class="my-4">
+					<input id="email" class="form-control" type="email" size="25"
+					   th:value="*{email}" name="email" placeholder="Email" required autofocus />
+				</div>
+				<div class="my-4">
+					<input id="password" class="form-control" type="password" size="30" minlength="8"
+						   maxlength="30" name="password" placeholder="Password" required
+						   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$" />
+				</div>
+				<div class="d-flex justify-content-around">
+					<div>
+						<!-- Remember me -->
+						<div class="custom-control custom-checkbox">
+							<input id="remember-me" class="custom-control-input" type="checkbox" name="remember-me"/>
+							<label for="remember-me" class="custom-control-label">Remember me</label>
+						</div>
+					</div>
+					<!-- Forgot password -->
+					<div>
+						<a th:href="@{/forgotPassword}">Forgot password</a>
+					</div>
+				</div>
+				<div id="sign-in-btn-container" class="my-4">
+					<button id="sign-in-btn" class="btn btn-outline-primary w-100 my-2" type="submit">Sign In</button>
+				</div>
+				<div>
+					<p class="mb-0">
+						Not a member?
+						<a th:href="@{/register}" class="col-md-2 text-primary">Register</a>
+					</p>
+				</div>
+			</form>
+		</div>
+	</section>
+</body>
+</html>

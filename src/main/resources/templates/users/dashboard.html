@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<th:block th:include="fragments/assets.html :: assets"></th:block>
+</head>
+<body>
+	<div th:insert="fragments/headerAndFooter.html :: header"></div>
+	<section class="min-vh-100 my-4">
+		<div class="container-fluid py-4 h-100 col-4 bg-light text-center">
+			<div class="card text-white rounded bg-dark">
+				<p class="h4 card-header">Your Accounts</p>
+			</div>
+			<div class="container text-center">
+				<div class="list-group my-4">
+					<a class="btn btn-outline-primary list-group-item my-4" th:href="@{/account/{accountName}(accountName=${account.name})}"
+					   th:each="account : ${accounts}">
+						<span th:text="${account.name}"></span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

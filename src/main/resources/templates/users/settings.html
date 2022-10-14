@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+	crossorigin="anonymous">
+<th:block th:include="fragments/assets.html :: assets"></th:block>
+<title>Settings</title>
+</head>
+<body>
+	<div th:insert="fragments/headerAndFooter.html :: header"></div>
+
+	<section class="min-vh-100 py-5">
+    	<div class="container py-5 col-sm-3 border border-gray bg-light">
+        	<div class="card">
+            	<p class="h4 card-header bg-dark text-white rounded text-center">Account Information</p>
+        	</div>
+        	<div class="card-body">
+         		<div class="content">
+          			<p th:text="|First Name : ${user.firstName}|"></p>
+					<p th:text="|Last Name : ${user.lastName}|"></p>
+					<p class="text-truncate" th:text="|Email : ${user.email}|"></p>
+					<p th:text="|Service Level : ${account.serviceLevel}|"></p>
+         		</div>
+         		<div>
+	       			<a class="btn btn-primary btn-block mb-2" th:href="@{/settings/editProfileInformation}">Edit Profile Information</a>
+					<a class="btn btn-primary btn-block" th:href="@{/settings/serviceLevel}">Service Level Information</a>
+         		</div>
+        	</div>
+		</div>
+	</section>
+
+</body>
+</html>

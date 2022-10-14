@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+	crossorigin="anonymous">
+<th:block th:include="fragments/assets.html :: assets"></th:block>
+<title>Service Level</title>
+</head>
+<body>
+	<div th:insert="fragments/headerAndFooter.html :: header"></div>
+	<section class="min-vh-100 py-5">
+		<div class="container py-5">
+			<form action="">
+				<div class="mx-auto form-group row justify-content-center">
+				<label for="currentServiceLevel" class="col-form-label col-md-2 form-label-md">Current Service Level</label>
+					<div>
+						<input id="currentServiceLevel" class="form-control" type="text" readonly th:placeholder="${session.account.serviceLevel}"/>
+					</div>
+				</div>
+				<div class="mx-auto form-group row justify-content-center">
+					<label for="currentPrice" class="col-form-label col-md-2 form-label-md">Current Price</label>
+						<div>
+							<input id="currentPrice" class="form-control" type="text" readonly th:placeholder="${#numbers.listFormatCurrency(price)}"/>
+						</div>
+				</div>
+				<div class="mx-auto form-inline row justify-content-center mb-2">
+					<div class="col-md-2 mb-2">
+						<label class="col-form-label form-label-md">Account Users</label>
+					</div>
+					<div th:each="guest : ${session.account.users}" class="mb-2 col=">
+						<input id="accountUser" class="form-control" type="text" readonly th:placeholder="${guest}" />
+						<a class="btn btn-primary mr-2" th:href="@{/settings/deleteUser/{deletedId}(deletedId=${guest.id})}" role="button">
+								<span id="trashCan" class="fas fa-trash-alt"></span>
+						</a>
+					</div>
+				</div>
+			</form>
+			<form th:action="@{/settings/upgradeServiceLevel}" method="post">
+				<div class="mx-auto form-group row justify-content-center">
+					<label for="selectedServiceLevel" class="col-form-label col-md-2 form-label-md">Select Service Level</label>
+					<div class="col-md-5">
+						<select id="selectedServiceLevel" class="form-control" name="selected">
+							<option th:each="level : ${levels}" th:value="${level}"
+								th:text="${level}"></option>
+						</select> 
+					</div>
+					<input class="ml-2 btn btn-primary" type="submit" value="Update" />
+				</div>
+			</form>
+			<span th:text="${deleteSelf}"></span>
+			<form th:action="@{/settings/addUser}" method="post">
+				<div class="mx-auto form-group row justify-content-center">
+					<label for="email" class="col-form-label col-md-2 form-label-md">Add User</label> 
+					<div class="col-md-5">
+						<input id="email" class="form-control" th:classappend="${message} ? is-invalid" type="email" placeholder="Email" required name="guestEmail" />
+					</div>
+					<input class="ml-2 px-4 btn btn-primary" type="submit" value="Add" />
+				</div>
+				<div th:if="${message}" class="mx-auto row justify-content-center">
+						<p class="text-danger " th:text="${message}"></p>
+					</div>
+			</form>
+		</div>
+	</section>
+</body>
+</html>
